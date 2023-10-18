@@ -1,4 +1,4 @@
-A plugin for adding water effects to Flutter apps.
+A library for adding water effects to Flutter apps.
 
 Wrap any widget with a WaterFXContainer, and it will appear as if it is under
 water when touched. You will see water ripples moving across the surface of
