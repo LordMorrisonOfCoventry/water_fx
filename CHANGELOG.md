@@ -9,3 +9,7 @@
 ## 1.0.2
 
 * Updated documentation and fixed some compliance issues.
+
+## 1.0.3
+
+* Fixed a compliance issue.
