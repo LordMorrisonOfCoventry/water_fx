@@ -8,4 +8,4 @@
 
 ## 1.0.2
 
-* Updated documentation.
+* Updated documentation and fixed some compliance issues.
