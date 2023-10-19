@@ -5,7 +5,8 @@ water when touched. You will see water ripples moving across the surface of
 your widget. Touches can be applied by the pointer, the finger, or by code.
 E.g. you can use code to simulate rain drops falling on your widget.
 
-<p><img src="https://github.com/LordMorrisonOfCoventry/water_fx/assets/143798899/4a92cc39-f2f7-4baa-afcb-178189ef2068?raw=true" alt="WaterFX wrapping an image" /></p>
+<p><img src="[https://github.com/LordMorrisonOfCoventry/water_fx/assets/143798899/4a92cc39-f2f7-4baa-afcb-178189ef2068](https://github.com/LordMorrisonOfCoventry/water_fx/assets/143798899/93ed45b2-a399-4348-92dc-494999204934)?raw=true" alt="WaterFX wrapping an image" /></p>
+![luke](https://github.com/LordMorrisonOfCoventry/water_fx/assets/143798899/93ed45b2-a399-4348-92dc-494999204934)
 
 Check out the WaterFX web page - www.jimmorrison101.com/water_fx/
 
