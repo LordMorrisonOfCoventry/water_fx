@@ -6,6 +6,10 @@ your widget. Touches can be applied by the pointer, the finger, or by code.
 E.g. you can use code to simulate rain drops falling on your widget.
 
 
+https://github.com/LordMorrisonOfCoventry/water_fx/assets/143798899/4a92cc39-f2f7-4baa-afcb-178189ef2068
+
+
+
 ## Getting started
 
 To use this plugin, add `water_fx` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/platform-integration/platform-channels).
