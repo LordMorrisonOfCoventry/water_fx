@@ -25,3 +25,7 @@
 ## 1.0.6
 
 * Fixed a compliance issue.
+
+## 1.0.7
+
+* Added an animated GIF.
