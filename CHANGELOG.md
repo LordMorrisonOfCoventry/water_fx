@@ -13,3 +13,7 @@
 ## 1.0.3
 
 * Fixed a compliance issue.
+
+## 1.0.4
+
+* Fixed a compliance issue.
