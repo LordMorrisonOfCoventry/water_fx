@@ -17,3 +17,7 @@
 ## 1.0.4
 
 * Fixed a compliance issue.
+
+## 1.0.5
+
+* Updated README.
