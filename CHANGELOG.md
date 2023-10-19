@@ -29,3 +29,7 @@
 ## 1.0.7
 
 * Added an animated GIF.
+
+## 1.0.8
+
+* Fixed GIF issue.
