@@ -8,7 +8,7 @@ E.g. you can use code to simulate rain drops falling on your widget.
 
 https://github.com/LordMorrisonOfCoventry/water_fx/assets/143798899/4a92cc39-f2f7-4baa-afcb-178189ef2068
 
-Check out the WaterFX [web page](http://www.jimmorrison101.com/water_fx/).
+Check out the WaterFX web page - www.jimmorrison101.com/water_fx/
 
 ## Getting started
 
@@ -53,6 +53,6 @@ Widget build(BuildContext context) => MaterialApp(
 
 ## Additional information
 
-You can find out more about WaterFX here: https://www.jimmorrison101.com/water_fx
+You can find out more about WaterFX here: www.jimmorrison101.com/water_fx
 
 The original idea for WaterFX is based on an algorithm by Neil Wallis: https://www.neilwallis.com/index.php
