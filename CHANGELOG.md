@@ -37,3 +37,7 @@
 ## 1.0.9
 
 * Fixed GIF issue.
+
+## 1.0.9
+
+* Updated documentation.

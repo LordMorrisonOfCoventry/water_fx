@@ -2,8 +2,11 @@ A library for adding water effects to Flutter apps.
 
 Wrap any widget with a `WaterFXContainer`, and it will appear as if it is under
 water when touched. You will see water ripples moving across the surface of
-your widget. Touches can be applied by the pointer, the finger, or by code.
-E.g. you can use code to simulate rain drops falling on your widget.
+your widget. The image below is an animated screenshot of a Flutter app that is
+using the WaterFX library. This effect can be applied to any Flutter widget;
+image, video, button, table etc. Touches can be applied by the pointer, the
+finger, or by code. E.g. you can use code to simulate rain drops falling on
+your widget.
 
 <p><img src="https://github.com/LordMorrisonOfCoventry/water_fx/assets/143798899/93ed45b2-a399-4348-92dc-494999204934?raw=true" alt="WaterFX wrapping an image" /></p>
 
