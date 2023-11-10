@@ -23,6 +23,9 @@ class SolidCircleBarrier implements Barrier {
 
   @override
   bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight) {
+    if (!isActive) {
+      return false;
+    }
     int dx = pointX - centerX;
     int dy = pointY - centerY;
     int squaredDistance = (dx * dx) + (dy * dy);

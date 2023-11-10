@@ -17,8 +17,10 @@ class PaddingBarrier implements Barrier {
 
   @override
   bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight) =>
-      pointX < edgeInsets.left ||
-      pointX > (imageWidth - edgeInsets.right) ||
-      pointY < edgeInsets.top ||
-      pointY > (imageHeight - edgeInsets.bottom);
+      isActive
+          ? pointX < edgeInsets.left ||
+              pointX > (imageWidth - edgeInsets.right) ||
+              pointY < edgeInsets.top ||
+              pointY > (imageHeight - edgeInsets.bottom)
+          : false;
 }

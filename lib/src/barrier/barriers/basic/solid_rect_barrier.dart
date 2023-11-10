@@ -25,21 +25,35 @@ class SolidRectBarrier implements Barrier {
     this.isActive = true,
   });
 
-  SolidRectBarrier.fromLTWH(int leftX, int topY, int width, int height)
-      : this(leftX: leftX, topY: topY, width: width, height: height);
+  SolidRectBarrier.fromLTWH(
+    int leftX,
+    int topY,
+    int width,
+    int height, {
+    bool isActive = true,
+  }) : this(
+            leftX: leftX,
+            topY: topY,
+            width: width,
+            height: height,
+            isActive: isActive);
 
-  SolidRectBarrier.fromRect(Rect rect)
-      : this(
-          leftX: rect.left.toInt(),
-          topY: rect.top.toInt(),
-          width: rect.width.toInt(),
-          height: rect.height.toInt(),
-        );
+  SolidRectBarrier.fromRect(
+    Rect rect, {
+    bool isActive = true,
+  }) : this(
+            leftX: rect.left.toInt(),
+            topY: rect.top.toInt(),
+            width: rect.width.toInt(),
+            height: rect.height.toInt(),
+            isActive: isActive);
 
   @override
   bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight) =>
-      pointX >= leftX &&
-      pointX < (leftX + width) &&
-      pointY >= topY &&
-      pointY < (topY + height);
+      isActive
+          ? pointX >= leftX &&
+              pointX < (leftX + width) &&
+              pointY >= topY &&
+              pointY < (topY + height)
+          : false;
 }

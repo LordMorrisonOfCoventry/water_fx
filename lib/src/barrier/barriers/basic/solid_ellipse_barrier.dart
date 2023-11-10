@@ -25,24 +25,34 @@ class SolidEllipseBarrier implements Barrier {
     this.isActive = true,
   });
 
-  SolidEllipseBarrier.fromLTWH(int leftX, int topY, int width, int height)
-      : this(
-          centerX: leftX + width ~/ 2,
-          centerY: topY + height ~/ 2,
-          width: width,
-          height: height,
-        );
+  SolidEllipseBarrier.fromLTWH(
+    int leftX,
+    int topY,
+    int width,
+    int height, {
+    bool isActive = true,
+  }) : this(
+            centerX: leftX + width ~/ 2,
+            centerY: topY + height ~/ 2,
+            width: width,
+            height: height,
+            isActive: isActive);
 
-  SolidEllipseBarrier.fromRect(Rect rect)
-      : this(
-          centerX: rect.left.toInt() + rect.width ~/ 2,
-          centerY: rect.top.toInt() + rect.height ~/ 2,
-          width: rect.width.toInt(),
-          height: rect.height.toInt(),
-        );
+  SolidEllipseBarrier.fromRect(
+    Rect rect, {
+    bool isActive = true,
+  }) : this(
+            centerX: rect.left.toInt() + rect.width ~/ 2,
+            centerY: rect.top.toInt() + rect.height ~/ 2,
+            width: rect.width.toInt(),
+            height: rect.height.toInt(),
+            isActive: isActive);
 
   @override
   bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight) {
+    if (!isActive) {
+      return false;
+    }
     double normalizedX = (pointX - centerX) / width * 2;
     double normalizedY = (pointY - centerY) / height * 2;
     return ((normalizedX * normalizedX) + (normalizedY * normalizedY)) <= 1.0;

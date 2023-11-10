@@ -1,6 +1,6 @@
 name: water_fx
 description: A library for adding water effects to Flutter apps. Wrap any widget with a WaterFXContainer, and it will seem to be under water when touched.
-version: 1.0.11
+version: 1.0.12
 homepage: https://github.com/LordMorrisonOfCoventry/water_fx
 repository: https://github.com/LordMorrisonOfCoventry/water_fx
 
