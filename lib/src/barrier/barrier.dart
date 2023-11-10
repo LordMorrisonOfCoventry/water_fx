@@ -16,6 +16,9 @@ abstract class Barrier {
   /// slow down the animation considerably. For this reason, [Barrier]s should
   /// be simple shapes with efficient [containsPoint] methods.
   bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight);
+
+  /// Whether or not this barrier is currently active.
+  bool isActive = true;
 }
 
 /// A [Barrier] that groups together other barriers ([_barriers]).
@@ -26,11 +29,17 @@ class CompoundBarrier implements Barrier {
   /// The barriers that make up this compound barrier.
   final List<Barrier> _barriers;
 
-  const CompoundBarrier(this._barriers);
+  /// Whether or not this barrier is currently active.
+  @override
+  bool isActive;
+
+  CompoundBarrier(this._barriers, {this.isActive = true});
 
   /// Returns true if this barrier contains the point, false otherwise.
   @override
   bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight) =>
-      _barriers.any((barrier) =>
-          barrier.containsPoint(pointX, pointY, imageWidth, imageHeight));
+      isActive
+          ? _barriers.any((barrier) =>
+              barrier.containsPoint(pointX, pointY, imageWidth, imageHeight))
+          : false;
 }

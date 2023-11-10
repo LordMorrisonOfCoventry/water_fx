@@ -10,10 +10,15 @@ class SolidCircleBarrier implements Barrier {
   final int centerY;
   final int radius;
 
-  const SolidCircleBarrier({
+  /// Whether or not this barrier is currently active.
+  @override
+  bool isActive;
+
+  SolidCircleBarrier({
     required this.centerX,
     required this.centerY,
     required this.radius,
+    this.isActive = true,
   });
 
   @override

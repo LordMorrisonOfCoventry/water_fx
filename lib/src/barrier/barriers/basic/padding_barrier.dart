@@ -9,7 +9,11 @@ import '../../barrier.dart';
 class PaddingBarrier implements Barrier {
   final EdgeInsets edgeInsets;
 
-  const PaddingBarrier(this.edgeInsets);
+  /// Whether or not this barrier is currently active.
+  @override
+  bool isActive;
+
+  PaddingBarrier(this.edgeInsets, {this.isActive = true});
 
   @override
   bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight) =>

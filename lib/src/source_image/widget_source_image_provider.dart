@@ -40,9 +40,29 @@ class WidgetSourceImageProvider implements SourceImageProvider {
   Future<dart_ui.Image?> get sourceImage async {
     RenderObject? renderObject =
         _widgetImageKey.currentContext?.findRenderObject();
-    return (renderObject is RenderRepaintBoundary)
-        ? await renderObject.toImage()
-        : null;
+
+    if (renderObject is! RenderRepaintBoundary) {
+      return null;
+    }
+
+    // Note: this is a hack. There is probably a better way to wait until the
+    // render object is ready to capture its image.
+    return await _getImageFromRenderRepaintBoundary(renderObject);
+  }
+
+  Future<dart_ui.Image?> _getImageFromRenderRepaintBoundary(
+      RenderRepaintBoundary renderRepaintBoundary) async {
+    for (int i = 0; i < 100; i++) {
+      try {
+        return await renderRepaintBoundary.toImage();
+      } catch (e) {
+        // Not ready yet.
+        // This means that the compositing layer that [renderRepaintBoundary]
+        // uses to repaint is not ready yet, so the image cannot be captured.
+      }
+      await Future.delayed(const Duration(milliseconds: 10));
+    }
+    return null;
   }
 
   /// Returns true if the widget may change over time, false otherwise.

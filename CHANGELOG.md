@@ -41,3 +41,7 @@
 ## 1.0.9
 
 * Updated documentation.
+
+## 1.0.11
+
+* Fixed a rendering exception for release builds and added code to allow barriers to be active or inactive.

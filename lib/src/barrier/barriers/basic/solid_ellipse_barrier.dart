@@ -13,11 +13,16 @@ class SolidEllipseBarrier implements Barrier {
   final int width;
   final int height;
 
-  const SolidEllipseBarrier({
+  /// Whether or not this barrier is currently active.
+  @override
+  bool isActive;
+
+  SolidEllipseBarrier({
     required this.centerX,
     required this.centerY,
     required this.width,
     required this.height,
+    this.isActive = true,
   });
 
   SolidEllipseBarrier.fromLTWH(int leftX, int topY, int width, int height)

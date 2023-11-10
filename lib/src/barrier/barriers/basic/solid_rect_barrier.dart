@@ -13,11 +13,16 @@ class SolidRectBarrier implements Barrier {
   final int width;
   final int height;
 
-  const SolidRectBarrier({
+  /// Whether or not this barrier is currently active.
+  @override
+  bool isActive;
+
+  SolidRectBarrier({
     required this.leftX,
     required this.topY,
     required this.width,
     required this.height,
+    this.isActive = true,
   });
 
   SolidRectBarrier.fromLTWH(int leftX, int topY, int width, int height)
