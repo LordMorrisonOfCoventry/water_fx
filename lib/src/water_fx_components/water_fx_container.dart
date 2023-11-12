@@ -98,11 +98,11 @@ class WaterFXContainer extends StatefulWidget {
   /// change over time), set this to false to improve performance.
   final bool childMayChangeOverTime;
 
-  /// A barrier through which the water ripples cannot pass.
+  /// A list of barriers for this [WaterFXContainer].
   ///
-  /// This can be used to make sure certain areas of the child widget can always
-  /// be seen clearly. It can also be used to observe how waves move around
-  /// solid objects.
+  /// These barriers can be used to make sure certain areas of the child widget
+  /// can always be seen clearly, to make sure that certain areas cannot be
+  /// 'touched', or both of these things.
   ///
   /// Note: [Barrier] implementations should be as efficient as possible. This
   /// is because their [Barrier.containsPoint] method will be called for every
@@ -110,7 +110,7 @@ class WaterFXContainer extends StatefulWidget {
   /// very efficient, it will slow down the animation considerably. For this
   /// reason, barriers should be simple shapes with efficient
   /// [Barrier.containsPoint] methods.
-  final Barrier? barrier;
+  final List<Barrier>? barriers;
 
   /// Whether or not this [WaterFXContainer] should produce the water effect
   /// (true by default).
@@ -125,7 +125,7 @@ class WaterFXContainer extends StatefulWidget {
     required this.child,
     required this.touchSource,
     this.childMayChangeOverTime = true,
-    this.barrier,
+    this.barriers,
     this.isActive = true,
     super.key,
   });
@@ -134,13 +134,13 @@ class WaterFXContainer extends StatefulWidget {
   WaterFXContainer.imageInstance({
     required dart_ui.Image image,
     required TouchSource touchSource,
-    Barrier? barrier,
+    List<Barrier>? barriers,
     Key? key,
   }) : this(
           child: RawImage(image: image),
           touchSource: touchSource,
           childMayChangeOverTime: false,
-          barrier: barrier,
+          barriers: barriers,
           key: key,
         );
 
@@ -176,13 +176,13 @@ class WaterFXContainer extends StatefulWidget {
     required Widget child,
     required TouchSource touchSource,
     bool widgetMayChangeOverTime = true,
-    Barrier? barrier,
+    List<Barrier>? barriers,
     Key? key,
   }) : this(
           child: child,
           touchSource: touchSource,
           childMayChangeOverTime: widgetMayChangeOverTime,
-          barrier: barrier,
+          barriers: barriers,
           key: key,
         );
 
@@ -292,7 +292,7 @@ class _WaterFXContainerState extends State<WaterFXContainer> {
   void _initWaterMovementProcessor() => _waterFXProcessor = WaterFXProcessor(
         sourceImageProvider: _childImageProvider,
         touchSource: widget.touchSource,
-        barrier: widget.barrier,
+        barriers: widget.barriers,
         isActive: widget.isActive,
       );
 

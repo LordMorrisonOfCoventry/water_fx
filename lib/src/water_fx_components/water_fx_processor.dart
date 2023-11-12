@@ -98,18 +98,18 @@ class WaterFXProcessor {
   /// 2. Programatic - touches being produced by other code.
   final TouchSource touchSource;
 
-  /// A barrier through which the water ripples cannot pass.
+  /// A list of barriers for this [WaterFXProcessor].
   ///
-  /// This can be used to make sure certain areas of the image can always be
-  /// seen clearly. It can also be used to observe how waves move around solid
-  /// objects.
+  /// These barriers can be used to make sure certain areas of the child widget
+  /// can always be seen clearly, to make sure that certain areas cannot be
+  /// 'touched', or both of these things.
   ///
   /// Note: [Barrier] implementations should be as efficient as possible. This
   /// is because their [Barrier.containsPoint] method will be called for every
   /// pixel in the source image. So if the implementation is not very efficient,
   /// it will slow down the animation considerably. For this reason, barriers
   /// should be simple shapes with efficient [Barrier.containsPoint] methods.
-  final Barrier? barrier;
+  final List<Barrier>? barriers;
 
   /// Whether or not this [WaterFXProcessor] should produce the water
   /// effect (true by default).
@@ -139,7 +139,7 @@ class WaterFXProcessor {
   WaterFXProcessor({
     required this.sourceImageProvider,
     required this.touchSource,
-    this.barrier,
+    this.barriers,
     this.isActive = true,
   }) {
     _sourceImageSizeHasBeenEstablished = false;
@@ -151,11 +151,11 @@ class WaterFXProcessor {
   WaterFXProcessor.imageInstance({
     required dart_ui.Image image,
     required TouchSource touchSource,
-    Barrier? barrier,
+    List<Barrier>? barriers,
   }) : this(
           sourceImageProvider: StaticSourceImageProvider(image),
           touchSource: touchSource,
-          barrier: barrier,
+          barriers: barriers,
         );
 
   /// Creates a [WaterFXProcessor] for a [dart_ui.Image], that produces
@@ -183,11 +183,11 @@ class WaterFXProcessor {
   WaterFXProcessor.widgetInstance({
     required GlobalKey<State<StatefulWidget>> widgetImageKey,
     required TouchSource touchSource,
-    Barrier? barrier,
+    List<Barrier>? barriers,
   }) : this(
           sourceImageProvider: WidgetSourceImageProvider(widgetImageKey),
           touchSource: PointerTouchSource(),
-          barrier: barrier,
+          barriers: barriers,
         );
 
   /// Creates a [WaterFXProcessor] for a [Widget], that produces ripples
@@ -343,7 +343,7 @@ class WaterFXProcessor {
               touchPoint.pointX, touchPoint.pointY));
 
   bool _shouldAllowTouchAtPointToDisturbWater(int pointX, int pointY) =>
-      _ticker.isActive && !_pixelIsInsideBarrier(pointX, pointY);
+      _ticker.isActive && !_pixelIsInsideATouchBarrier(pointX, pointY);
 
   Future<void> _generateNextFrameImage({
     required void Function(dart_ui.Image) onNewFrameImageReadyCallback,
@@ -398,7 +398,7 @@ class WaterFXProcessor {
     int mapIndexOfCurrentPixel = 0;
     for (int pixelY = 0; pixelY < _sourceImageHeight; pixelY++) {
       for (int pixelX = 0; pixelX < _sourceImageWidth; pixelX++) {
-        if (_pixelIsInsideBarrier(pixelX, pixelY)) {
+        if (_pixelIsInsideARippleBarrier(pixelX, pixelY)) {
           _updatePixelInsideBarrierInRippleHeightSinkMapWithRippleHeight(
               mapIndexOfCurrentPixel);
           _updatePixelInsideBarrierInFrameImageColorMapWithNewColorFromSourceImage(
@@ -549,10 +549,33 @@ class WaterFXProcessor {
               _getMapIndexForPixelAtTouchPoint(touchPoint)] +=
           touchPoint.touchStrengthUnit * _maxRippleHeight ~/ 2;
 
-  bool _pixelIsInsideBarrier(int pixelX, int pixelY) =>
-      barrier?.containsPoint(
-          pixelX, pixelY, _sourceImageWidth, _sourceImageHeight) ??
-      false;
+  bool _pixelIsInsideARippleBarrier(int pixelX, int pixelY) {
+    if (barriers == null) {
+      return false;
+    }
+    return barriers!.any((barrier) =>
+        _isARippleBarrier(barrier) &&
+        barrier.containsPoint(
+            pixelX, pixelY, _sourceImageWidth, _sourceImageHeight));
+  }
+
+  bool _pixelIsInsideATouchBarrier(int pixelX, int pixelY) {
+    if (barriers == null) {
+      return false;
+    }
+    return barriers!.any((barrier) =>
+        _isATouchBarrier(barrier) &&
+        barrier.containsPoint(
+            pixelX, pixelY, _sourceImageWidth, _sourceImageHeight));
+  }
+
+  bool _isARippleBarrier(Barrier barrier) =>
+      barrier.type == BarrierType.ripple ||
+      barrier.type == BarrierType.rippleAndTouch;
+
+  bool _isATouchBarrier(Barrier barrier) =>
+      barrier.type == BarrierType.touch ||
+      barrier.type == BarrierType.rippleAndTouch;
 
   int _getMapIndexForPixelAtTouchPoint(TouchPoint touchPoint) =>
       _getMapIndexForPixel(touchPoint.pointX, touchPoint.pointY);

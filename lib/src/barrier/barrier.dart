@@ -2,11 +2,11 @@
 // You may use this code however you want, as long as you show my name and this
 // link in your work: http://www.jimmorrison101.com/.
 
-/// A barrier through which the ripples of the [WaterFXContainer] cannot pass.
+/// A barrier for a WaterFX component.
 ///
 /// This can be used to make sure certain areas of the child widget can always
-/// be seen clearly. It can also be used to observe how waves move around solid
-/// objects.
+/// be seen clearly, to make sure that certain areas cannot be 'touched', or
+/// both of these things.
 abstract class Barrier {
   /// Returns true if this barrier contains the point, false otherwise.
   ///
@@ -17,29 +17,34 @@ abstract class Barrier {
   /// be simple shapes with efficient [containsPoint] methods.
   bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight);
 
+  /// The type of this barrier.
+  BarrierType type = BarrierType.rippleAndTouch;
+
   /// Whether or not this barrier is currently active.
   bool isActive = true;
 }
 
-/// A [Barrier] that groups together other barriers ([_barriers]).
+/// The type of barrier.
 ///
-/// The [containsPoint] method returns true if the point is contained within any
-/// of the barriers in [_barriers].
-class CompoundBarrier implements Barrier {
-  /// The barriers that make up this compound barrier.
-  final List<Barrier> _barriers;
+/// A [Barrier] can block ripples from entering the area of the barrier, it can
+/// block touches within the area of the barrier, or it can do both things.
+enum BarrierType {
+  /// A [Barrier] of this type blocks ripples from entering the area of the
+  /// barrier. It does not block touches within the area of the barrier, but any
+  /// ripples created by touches within the barrier will only be shown outside
+  /// the barrier.
+  ripple,
 
-  /// Whether or not this barrier is currently active.
-  @override
-  bool isActive;
+  /// A [Barrier] of this type blocks touches within the area of the barrier. No
+  /// ripples will be created as a result of a touch within a barrier of this
+  /// type, but any ripples created by touches outside the barrier may be shown
+  /// inside the barrier.
+  touch,
 
-  CompoundBarrier(this._barriers, {this.isActive = true});
-
-  /// Returns true if this barrier contains the point, false otherwise.
-  @override
-  bool containsPoint(int pointX, int pointY, int imageWidth, int imageHeight) =>
-      isActive
-          ? _barriers.any((barrier) =>
-              barrier.containsPoint(pointX, pointY, imageWidth, imageHeight))
-          : false;
+  /// A [Barrier] of this type blocks ripples from entering the area of the
+  /// barrier, as well as blocking touches within this area. No ripples will be
+  /// created as a result of a touch within a barrier of this type, and any
+  /// ripples created by touches outside the barrier will not be shown inside
+  /// the barrier.
+  rippleAndTouch,
 }

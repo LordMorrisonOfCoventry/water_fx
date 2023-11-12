@@ -13,6 +13,14 @@ class SolidEllipseBarrier implements Barrier {
   final int width;
   final int height;
 
+  /// The type of this barrier.
+  ///
+  /// A [Barrier] can block ripples from entering the area of the barrier, it
+  /// can block touches within the area of the barrier, or it can do both
+  /// things.
+  @override
+  BarrierType type;
+
   /// Whether or not this barrier is currently active.
   @override
   bool isActive;
@@ -22,6 +30,7 @@ class SolidEllipseBarrier implements Barrier {
     required this.centerY,
     required this.width,
     required this.height,
+    this.type = BarrierType.rippleAndTouch,
     this.isActive = true,
   });
 
@@ -30,22 +39,26 @@ class SolidEllipseBarrier implements Barrier {
     int topY,
     int width,
     int height, {
+    BarrierType type = BarrierType.rippleAndTouch,
     bool isActive = true,
   }) : this(
             centerX: leftX + width ~/ 2,
             centerY: topY + height ~/ 2,
             width: width,
             height: height,
+            type: type,
             isActive: isActive);
 
   SolidEllipseBarrier.fromRect(
     Rect rect, {
+    BarrierType type = BarrierType.rippleAndTouch,
     bool isActive = true,
   }) : this(
             centerX: rect.left.toInt() + rect.width ~/ 2,
             centerY: rect.top.toInt() + rect.height ~/ 2,
             width: rect.width.toInt(),
             height: rect.height.toInt(),
+            type: type,
             isActive: isActive);
 
   @override

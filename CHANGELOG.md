@@ -49,3 +49,7 @@
 ## 1.0.12
 
 * Fixed a bug in barriers.
+
+## 1.0.13
+
+* Added barrier types.

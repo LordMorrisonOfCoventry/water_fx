@@ -10,6 +10,14 @@ class SolidCircleBarrier implements Barrier {
   final int centerY;
   final int radius;
 
+  /// The type of this barrier.
+  ///
+  /// A [Barrier] can block ripples from entering the area of the barrier, it
+  /// can block touches within the area of the barrier, or it can do both
+  /// things.
+  @override
+  BarrierType type;
+
   /// Whether or not this barrier is currently active.
   @override
   bool isActive;
@@ -18,6 +26,7 @@ class SolidCircleBarrier implements Barrier {
     required this.centerX,
     required this.centerY,
     required this.radius,
+    this.type = BarrierType.rippleAndTouch,
     this.isActive = true,
   });
 
